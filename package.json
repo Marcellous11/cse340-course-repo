@@ -7,7 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint *.js src/**/*.js",
+    "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\""
   },
   "repository": {
     "type": "git",
@@ -21,8 +23,10 @@
   "homepage": "https://github.com/Marcellous11/cse340-course-repo#readme",
   "dependencies": {
     "ejs": "^4.0.1",
+    "eslint": "^9.39.4",
     "express": "^5.2.1",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "prettier": "^3.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
