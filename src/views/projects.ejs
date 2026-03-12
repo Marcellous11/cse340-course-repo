@@ -1,11 +1,33 @@
 <%- include('partials/header') %>
-    <main>
-         <h1><%= title %></h1>
+<main>
+    <h1><%= title %></h1>
+
+    <section class="projects-intro">
         <h2>Upcoming Service Projects</h2>
-        <ul>
-            <li>Park Cleanup - Join us to clean up local parks and make them beautiful!</li>
-            <li>Food Drive - Help collect and distribute food to those in need.</li>
-            <li>Community Tutoring - Volunteer to tutor students in various subjects.</li>
-        </ul>
-    </main>
+        <p>Find volunteer opportunities in your community. Browse projects by our partner organizations.</p>
+    </section>
+
+    <% if (projects.length === 0) { %>
+        <p class="projects-empty">No upcoming projects at the moment. Check back soon!</p>
+    <% } else { %>
+        <section class="projects-grid" aria-label="Upcoming service projects">
+            <% projects.forEach(project => { %>
+                <% const formattedDate = new Date(project.project_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); %>
+                <article class="project-card">
+                    <header class="project-card__header">
+                        <h3 class="project-card__title"><%= project.title %></h3>
+                        <% if (project.name) { %>
+                            <span class="project-card__org"><%= project.name %></span>
+                        <% } %>
+                    </header>
+                    <p class="project-card__description"><%= project.description %></p>
+                    <footer class="project-card__meta">
+                        <span class="project-card__meta-item"><%= project.location %></span>
+                        <span class="project-card__meta-item"><%= formattedDate %></span>
+                    </footer>
+                </article>
+            <% }); %>
+        </section>
+    <% } %>
+</main>
 <%- include('partials/footer') %>
