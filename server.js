@@ -4,16 +4,14 @@ import path from "path";
 import { testConnection } from "./src/models/db.js";
 import { getAllOrganizations } from "./src/models/organizations.js";
 import { getAllServiceProjects } from "./src/models/projects.js";
+import { getAllCategories } from "./src/models/categories.js";
 // Define the the application environment
 const NODE_ENV = process.env.NODE_ENV.toLowerCase() || "production";
 
 // Define the port number the server will listen on
 const PORT = process.env.PORT || 3000;
-
-const filename = fileURLToPath(
-    import.meta.url);
+const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
-
 const app = express();
 
 /**
@@ -54,8 +52,8 @@ app.get("/projects", async(req, res) => {
 });
 app.get("/categories", async(req, res) => {
     const title = "Categories";
-
-    res.render("categories", { title });
+    const categories = await getAllCategories();
+    res.render("categories", { title,  categories });
 });
 
 app.listen(PORT, async() => {
