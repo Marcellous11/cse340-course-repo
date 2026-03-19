@@ -12,12 +12,13 @@
     <% } else { %>
         <section class="projects-grid" aria-label="Upcoming service projects">
             <% projects.forEach(project => { %>
+             
                 <% const formattedDate = new Date(project.project_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); %>
                 <article class="project-card">
                     <header class="project-card__header">
-                        <h3 class="project-card__title"><%= project.title %></h3>
+                        <a href="project/<%= project.project_id %>">   <h3 class="project-card__title"><%= project.title %></h3>    </a>
                         <% if (project.name) { %>
-                            <span class="project-card__org"><%= project.name %></span>
+                            <a href="organization/<%= project.organization_id%>"><span class="project-card__org"><%= project.name %></span></a>
                         <% } %>
                     </header>
                     <p class="project-card__description"><%= project.description %></p>
@@ -26,6 +27,7 @@
                         <span class="project-card__meta-item"><%= formattedDate %></span>
                     </footer>
                 </article>
+        
             <% }); %>
         </section>
     <% } %>
