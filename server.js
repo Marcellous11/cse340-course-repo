@@ -3,7 +3,8 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { testConnection } from "./src/models/db.js";
 import router from "./src/controllers/routes.js";
-
+import flash from "req-flash";
+import session from 'express-session';
 // Define the the application environment
 const NODE_ENV = process.env.NODE_ENV.toLowerCase() || "production";
 
@@ -20,6 +21,16 @@ const app = express();
 app.set("view engine", "ejs");
 // Tell Express where to find your templates
 app.set("views", path.join(dirname, "src/views"));
+
+// Allow Express to receive and process common POST data
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+}));
+app.use(flash());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Serve static files from the public directory
 app.use(express.static(path.join(dirname, "public")));
