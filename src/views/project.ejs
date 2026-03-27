@@ -8,13 +8,14 @@
     <p><strong>Description:</strong> <%= projectDetails.description %></p>
     <p><strong>Date:</strong> <%= projectDetails.project_date %></p>
     <p><strong>Location:</strong> <%= projectDetails.location %></p>
-
+<a href="/assign-categories/<%= projectDetails.project_id %>">Edit Categories</a>
     <h3>Organization</h3>
     <p>
         <a href="/organization/<%= projectDetails.organization_id %>">
             <%= projectDetails.name %>
         </a>
     </p>
+    
 </main>
 
 <%- include('partials/footer') %>

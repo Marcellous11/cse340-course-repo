@@ -11,7 +11,7 @@ import {
   processEditOrganizationForm
 } from "./organizations.js";
 import { showProjectDetailsPage, showProjectsPage ,processNewProjectForm,showNewProjectForm,projectValidation} from "./projects.js";
-import { showCategoriesPage } from "./categories.js";
+import { showCategoriesPage ,showAssignCategoriesForm,processAssignCategoriesForm} from "./categories.js";
 import { testErrorPage } from "./errors.js";
 
 
@@ -29,6 +29,9 @@ router.get("/project/:id", showProjectDetailsPage);
 router.get('/new-project', showNewProjectForm);
 router.post('/new-project',projectValidation, processNewProjectForm);
 router.get("/categories", showCategoriesPage);
+router.get('/assign-categories/:projectId', showAssignCategoriesForm);
+router.post('/assign-categories/:projectId', processAssignCategoriesForm);
+
 
 // error-handling routes
 router.get("/test-error", testErrorPage);
