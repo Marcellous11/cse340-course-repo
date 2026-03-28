@@ -17,9 +17,9 @@
                 <% const formattedDate = new Date(project.project_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); %>
                 <article class="project-card">
                     <header class="project-card__header">
-                        <a href="project/<%= project.project_id %>">   <h3 class="project-card__title"><%= project.title %></h3>    </a>
+                        <a href="/project/<%= project.project_id %>"><h3 class="project-card__title"><%= project.title %></h3></a>
                         <% if (project.name) { %>
-                            <a href="organization/<%= project.organization_id%>"><span class="project-card__org"><%= project.name %></span></a>
+                            <a href="/organization/<%= project.organization_id %>"><span class="project-card__org"><%= project.name %></span></a>
                         <% } %>
                     </header>
                     <p class="project-card__description"><%= project.description %></p>

@@ -2,16 +2,24 @@ import express from "express";
 
 import { showHomePage } from "./index.js";
 import {
-  showOrganizationsPage,
-  showOrganizationDetailsPage,
-  showNewOrganizationForm,
-  processNewOrganizationForm,
-  organizationValidation,
-  showEditOrganizationForm,
-  processEditOrganizationForm
+    showOrganizationsPage,
+    showOrganizationDetailsPage,
+    showNewOrganizationForm,
+    processNewOrganizationForm,
+    organizationValidation,
+    showEditOrganizationForm,
+    processEditOrganizationForm
 } from "./organizations.js";
-import { showProjectDetailsPage, showProjectsPage ,processNewProjectForm,showNewProjectForm,projectValidation} from "./projects.js";
-import { showCategoriesPage ,showAssignCategoriesForm,processAssignCategoriesForm} from "./categories.js";
+import {
+    showProjectDetailsPage,
+    showProjectsPage,
+    processNewProjectForm,
+    showNewProjectForm,
+    projectValidation,
+    showEditProjectForm,
+    processEditProjectForm
+} from "./projects.js";
+import { showCategoriesPage, showAssignCategoriesForm, processAssignCategoriesForm } from "./categories.js";
 import { testErrorPage } from "./errors.js";
 
 
@@ -21,13 +29,15 @@ router.get("/", showHomePage);
 router.get("/organizations", showOrganizationsPage);
 router.get("/organization/:id", showOrganizationDetailsPage);
 router.get('/new-organization', showNewOrganizationForm);
-router.post('/new-organization', organizationValidation,processNewOrganizationForm);
+router.post('/new-organization', organizationValidation, processNewOrganizationForm);
 router.get('/edit-organization/:id', showEditOrganizationForm);
 router.post('/edit-organization/:id', organizationValidation, processEditOrganizationForm);
 router.get("/projects", showProjectsPage);
 router.get("/project/:id", showProjectDetailsPage);
 router.get('/new-project', showNewProjectForm);
-router.post('/new-project',projectValidation, processNewProjectForm);
+router.post('/new-project', projectValidation, processNewProjectForm);
+router.get('/edit-project/:id', showEditProjectForm);
+router.post('/edit-project/:id', projectValidation, processEditProjectForm);
 router.get("/categories", showCategoriesPage);
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
 router.post('/assign-categories/:projectId', processAssignCategoriesForm);
