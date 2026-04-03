@@ -37,7 +37,8 @@ import {
     processLogout,
     requireLogin,
     requireRole,
-    showDashboard
+    showDashboard,
+    showUsersPage
 } from "./users.js";
 import { testErrorPage } from "./errors.js";
 
@@ -53,6 +54,12 @@ router.post("/login", processLoginForm);
 router.get("/logout", processLogout);
 // Protected dashboard route
 router.get("/dashboard", requireLogin, showDashboard);
+router.get(
+    "/users",
+    requireLogin,
+    requireRole("admin", { forbiddenRedirect: "/dashboard" }),
+    showUsersPage
+);
 router.get("/organizations", showOrganizationsPage);
 router.get("/organization/:id", showOrganizationDetailsPage);
 router.get("/new-organization", requireRole("admin"), showNewOrganizationForm);

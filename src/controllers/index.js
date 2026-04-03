@@ -2,7 +2,7 @@
 
 // Define any controller functions
 const showHomePage = async (req, res) => {
-  const title = "Home";
+  const title = "Welcome";
 
   res.render("home", { title });
 };

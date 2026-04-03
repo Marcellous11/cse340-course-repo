@@ -1,15 +1,21 @@
 <%- include('partials/header') %>
 
-<main>
-    <h1><%= title %></h1>
+<main class="page-main page-main--home">
+    <section class="hero" aria-labelledby="home-heading">
+        <p class="hero__eyebrow">Connect. Serve. Grow.</p>
+        <h1 id="home-heading" class="hero__title"><%= title %></h1>
+        <p class="hero__lead">Welcome to the CSE 340 Service Network — linking volunteers with meaningful projects in communities everywhere.</p>
+        <p class="hero__body">Our mission is to promote service across the world by connecting people with opportunities that match their skills and passion.</p>
+    </section>
 
-    <h2>Welcome to the CSE 340 Service Network!</h2>
-    <p>Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.</p>
-
-    <img class="main-logo" src="images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
+    <div class="home-visual">
+        <img class="main-logo" src="/images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
+    </div>
 
     <% if (isLoggedIn) { %>
-        <p><a href="/dashboard">My Dashboard</a></p>
+        <p class="home-cta">
+            <a href="/dashboard" class="btn btn--primary">Go to my dashboard</a>
+        </p>
     <% } %>
 </main>
 

@@ -5,26 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <%= title %>
+        <%= title %> · CSE 340 Service Network
     </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/categories">Categories</a></li>
-            <% if (isLoggedIn) { %>
-                <li><a href="/logout">Logout</a></li>
-            <% } else { %>
-                <li><a href="/register">Register</a></li>
-                <li><a href="/login">Login</a></li>
-            <% } %>
-        </ul>
-    </nav>
+    <header class="site-header">
+        <nav class="site-nav" aria-label="Primary">
+            <div class="site-nav__inner">
+                <a href="/" class="site-nav__brand">
+                    <span class="site-nav__brand-mark" aria-hidden="true"></span>
+                    <span class="site-nav__brand-text">CSE 340 <span class="site-nav__brand-sub">Service Network</span></span>
+                </a>
+                <div class="site-nav__menus">
+                    <ul class="site-nav__links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/organizations">Organizations</a></li>
+                        <li><a href="/projects">Projects</a></li>
+                        <li><a href="/categories">Categories</a></li>
+                    </ul>
+                    <ul class="site-nav__links site-nav__links--account">
+                        <% if (isLoggedIn) { %>
+                            <li><a href="/dashboard">Dashboard</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        <% } else { %>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register" class="site-nav__cta">Register</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
     <% if (typeof messages !== "undefined" && messages) { %>
         <% if (messages.success) { %>
             <p class="flash flash--success" role="status"><%= messages.success %></p>

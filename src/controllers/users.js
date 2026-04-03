@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { createUser, authenticateUser } from "../models/users.js";
+import { createUser, authenticateUser, getAllUsers } from "../models/users.js";
 
 const showUserRegistrationForm = (req, res) => {
     res.render("register", { title: "Register" });
@@ -69,12 +69,12 @@ const requireLogin = (req, res, next) => {
 
 /**
  * Middleware factory to require specific role for route access
- * Returns middleware that checks if user has the required role
- *
  * @param {string} role - The role name required (e.g., 'admin', 'user')
+ * @param {{ forbiddenRedirect?: string }} [options] - If set, redirect here when role does not match (default '/')
  * @returns {Function} Express middleware function
  */
-const requireRole = (role) => {
+const requireRole = (role, options = {}) => {
+    const forbiddenRedirect = options.forbiddenRedirect ?? "/";
     return (req, res, next) => {
         if (!req.session || !req.session.user) {
             req.flash("error", "You must be logged in to access this page.");
@@ -83,7 +83,7 @@ const requireRole = (role) => {
 
         if (req.session.user.role_name !== role) {
             req.flash("error", "You do not have permission to access this page.");
-            return res.redirect("/");
+            return res.redirect(forbiddenRedirect);
         }
 
         next();
@@ -99,6 +99,20 @@ const showDashboard = (req, res) => {
     });
 };
 
+const showUsersPage = async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        res.render("users", {
+            title: "Registered Users",
+            users
+        });
+    } catch (error) {
+        console.error("Error loading users:", error);
+        req.flash("error", "Unable to load users.");
+        res.redirect("/dashboard");
+    }
+};
+
 export {
     showUserRegistrationForm,
     processUserRegistrationForm,
@@ -107,5 +121,6 @@ export {
     processLogout,
     requireLogin,
     requireRole,
-    showDashboard
+    showDashboard,
+    showUsersPage
 };
