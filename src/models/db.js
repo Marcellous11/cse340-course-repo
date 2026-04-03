@@ -10,24 +10,20 @@ import { Pool } from "pg";
  * Uses a connection string from environment variables for simplified setup.
  * The connection string format is:
  * postgresql://username:password@host:port/database
+ *
+ * Prefer DB_URL (e.g. Render); fall back to DATABASE_URL if present.
  */
-const pool = new Pool({
-  connectionString: process.env.DB_URL,
-  ssl: true,
-});
+const connectionString = process.env.DB_URL || process.env.DATABASE_URL;
 
-/**
- * Common SSL Issue:
- *
- * You may encounter SSL connection errors depending on your operating system, Node.js
- * version, or PostgreSQL server settings. If you have confirmed your credentials are
- * correct but still see SSL errors, try updating the 'ssl' property in the Pool
- * configuration above to:
- *
- * ssl: {
- *     rejectUnauthorized: false
- * }
- */
+const isLocalDatabase =
+  connectionString &&
+  (connectionString.includes("localhost") ||
+    connectionString.includes("127.0.0.1"));
+
+const pool = new Pool({
+  connectionString,
+  ssl: isLocalDatabase ? false : { rejectUnauthorized: false },
+});
 
 /**
  * Since we will modify the normal pool object in development mode, we need to create and
