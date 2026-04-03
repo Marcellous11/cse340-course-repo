@@ -6,7 +6,7 @@ import router from "./src/controllers/routes.js";
 import flash from "req-flash";
 import session from 'express-session';
 // Define the the application environment
-const NODE_ENV = process.env.NODE_ENV.toLowerCase() || "production";
+const NODE_ENV = (process.env.NODE_ENV || "production").toLowerCase();
 
 // Define the port number the server will listen on
 const PORT = process.env.PORT || 3000;
@@ -29,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
-app.use(flash());
+app.use(flash({ locals: "messages" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -44,8 +44,15 @@ app.use((req, res, next) => {
     next(); // Pass control to the next middleware or route
 });
 
-// Middleware to make NODE_ENV available to all templates
+// Middleware to set res.locals variables for all templates
 app.use((req, res, next) => {
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
+
+    res.locals.user = req.session.user || null;
+
     res.locals.NODE_ENV = NODE_ENV;
     next();
 });

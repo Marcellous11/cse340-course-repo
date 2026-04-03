@@ -53,8 +53,35 @@ CREATE TABLE service_project_category
         ON DELETE RESTRICT        -- keep a category if projects still use it
 );
 
+-- -------------------------------------------------
+-- Table: roles
+-- -------------------------------------------------
+CREATE TABLE roles
+(
+    role_id          SERIAL PRIMARY KEY,
+    role_name        VARCHAR(50) UNIQUE NOT NULL,
+    role_description TEXT
+);
 
+-- -------------------------------------------------
+-- Table: users
+-- -------------------------------------------------
+CREATE TABLE users
+(
+    user_id        SERIAL PRIMARY KEY,
+    name           VARCHAR(100) NOT NULL,
+    email          VARCHAR(100) UNIQUE NOT NULL,
+    password_hash  VARCHAR(255) NOT NULL,
+    role_id        INTEGER REFERENCES roles (role_id),
+    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+INSERT INTO roles (role_name, role_description) VALUES
+    ('user', 'Standard user with basic access'),
+    ('admin', 'Administrator with full system access');
+
+-- Verify the data was inserted
+SELECT * FROM roles;
 
 INSERT INTO organizations (name, description, contact_email, logo_filename)
 VALUES
@@ -172,9 +199,3 @@ INSERT INTO service_project_category (service_project_id, category_id) VALUES
     (13,3),   -- Neighborhood Cleanup           → Food & Shelter
     (14,3),   -- Holiday Toy Drive             → Food & Shelter
     (15,2);   -- Emergency Shelter Staffing    → Education
-
-
-
-
-
-
